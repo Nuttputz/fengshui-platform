@@ -31,7 +31,7 @@ with tab_home:
     if st.button("📊 สรุปพลังงานวันนี้", use_container_width=True, key="btn_dash"):
         with st.spinner("กำลังโหลดข้อมูลพลังงานฟ้าดิน..."):
             try:
-                res = requests.post("http://127.0.0.1:8000/daily-dashboard", json={"target_date": str(selected_date)}).json()
+                res = requests.post("https://fengshui-platform.onrender.com/daily-dashboard", json={"target_date": str(selected_date)}).json()
                 
                 # การ์ดสรุปฤกษ์
                 col1, col2 = st.columns(2)
@@ -75,7 +75,7 @@ with tab_chinese:
     if submit_chinese:
         payload = {"birth_year_zodiac": zodiac_c, "favorable_elements": fav_elements, "house_degree": int(house_degree), "start_date": str(start_date_c), "days_to_scan": int(days_c)}
         try:
-            res_c = requests.post("http://127.0.0.1:8000/analyze-dates", json=payload).json()
+            res_c = requests.post("https://fengshui-platform.onrender.com/analyze-dates", json=payload).json()
             st.subheader("📊 ปฏิทินฤกษ์มงคลจีน")
             
             # --- สร้างปฏิทินแบบ Grid ---
@@ -134,7 +134,7 @@ with tab_thai:
     if submit_thai:
         payload_thai = {"activity_type": activity, "start_date": str(start_date_t), "days_to_scan": int(days_t)}
         try:
-            res_t = requests.post("http://127.0.0.1:8000/analyze-thai-dates", json=payload_thai).json()
+            res_t = requests.post("https://fengshui-platform.onrender.com/analyze-thai-dates", json=payload_thai).json()
             st.subheader("📊 รายงานผลฤกษ์ไทย")
             for day in res_t["data"]:
                 icon = "✅" if day["status"] == "Green Zone" else "❌" if day["status"] == "Red Zone" else "⚠️"
