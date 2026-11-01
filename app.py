@@ -70,7 +70,7 @@ with col_input:
 if st.button("🔮 ดึงใบปฏิทินซินแสประจำวัน", use_container_width=True):
     with st.spinner("กำลังประกอบใบปฏิทิน..."):
         try:
-            res = requests.post("https://<ชื่อแอปบน-render>.onrender.com/generate-daily-sheet", json={"target_date": str(selected_date)}).json()
+            res = requests.post("https://fengshui-platform.onrender.com/generate-daily-sheet", json={"target_date": str(selected_date)}).json()
             
             # --- เริ่มวาดกระดาษปฏิทิน ---
             st.markdown("<div class='paper-container'>", unsafe_allow_html=True)
