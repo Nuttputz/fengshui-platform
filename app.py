@@ -144,16 +144,15 @@ with tab_home:
                     q_symbol = f"<span class='star-spec'>{h['quality']}</span>" if h['quality'] == "⭐" else f"<span class='star-good'>{h['quality']}</span>" if h['quality'] == "O" else f"<span class='star-bad'>{h['quality']}</span>"
                     safe_z_str = ", ".join(h['safe_zodiacs'][:6]) + "..."
                     
-                    table_rows += f"""
-                    <tr>
-                        <td><b>ดาว {h['star']}</b></td>
-                        <td><b>{h['pillar_cn']}</b></td>
-                        <td>{h['element']}</td>
-                        <td>{q_symbol}</td>
-                        <td>{h['time']}</td>
-                        <td style='text-align:left;'>{safe_z_str}</td>
-                    </tr>
-                    """
+                    # บีบ HTML ให้อยู่บรรทัดเดียว เพื่อไม่ให้ Streamlit มองว่าเป็น Code Block
+                    table_rows += f"<tr><td><b>ดาว {h['star']}</b></td><td><b>{h['pillar_cn']}</b></td><td>{h['element']}</td><td>{q_symbol}</td><td>{h['time']}</td><td style='text-align:left;'>{safe_z_str}</td></tr>"
+                
+                # บีบตารางเต็มให้อยู่บรรทัดเดียวเช่นกัน
+                full_table_html = f"<table class='hourly-table'><thead><tr><th style='width: 10%;'>ดาว</th><th style='width: 12%;'>ยาม</th><th style='width: 18%;'>ธาตุ/นักษัตร</th><th style='width: 12%;'>ฤกษ์</th><th style='width: 20%;'>ช่วงเวลา</th><th>ราศีปลอดภัยประจำยาม</th></tr></thead><tbody>{table_rows}</tbody></table>"
+                
+                st.markdown(full_table_html, unsafe_allow_html=True)
+                
+                st.markdown("</div>", unsafe_allow_html=True) # ปิดแผ่นปฏิทิน
                 
                 full_table_html = f"""
                 <table class='hourly-table'>
