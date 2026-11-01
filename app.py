@@ -194,24 +194,21 @@ with tab_home:
                     """
                     st.markdown(html_compass, unsafe_allow_html=True)
 
-                with col_right:
-                    st.markdown("<h4 style='color:#2C3E50;'>📜 เสาชะตาปาจื่อ (3 กาล)</h4>", unsafe_allow_html=True)
-                    bazi = res['bazi_3_pillars']
-                    bazi_html = f"""
-                    <table class='bazi-table'>
-                        <tr><th style='width:33%;'>วัน</th><th style='width:33%;'>เดือน</th><th style='width:33%;'>ปี</th></tr>
-                        <tr>
-                            <td style='font-size:1.2rem;'><b>{bazi['day']['cn']}</b></td>
-                            <td style='font-size:1.2rem;'><b>{bazi['month']['cn']}</b></td>
-                            <td style='font-size:1.2rem;'><b>{bazi['year']['cn']}</b></td>
-                        </tr>
-                        <tr>
-                            <td>{bazi['day']['element']}<br>{bazi['day']['zodiac']}</td>
-                            <td>{bazi['month']['element']}<br>{bazi['month']['zodiac']}</td>
-                            <td>{bazi['year']['element']}<br>{bazi['year']['zodiac']}</td>
-                        </tr>
-                    </table>
-                    """
+               with col_left:
+                    st.markdown("<h4 style='text-align:center; color:#2C3E50;'>🧭 ทิศทางและพลังงานประจำวัน</h4>", unsafe_allow_html=True)
+                    st.markdown(f"<div style='text-align:center; font-size:0.9rem; margin-bottom:10px;'>ดาวจรศูนย์กลาง: ปี <b>{res['stars']['year']}</b> | เดือน <b>{res['stars']['month']}</b> | วัน <b>{res['stars']['day']}</b></div>", unsafe_allow_html=True)
+                    
+                    # CSS บีบอัดเป็นบรรทัดเดียวป้องกัน Error
+                    compass_css = "<style>.compass-container { width: 100%; max-width: 280px; margin: 0 auto; padding: 15px; background-color: #FAFAFA; border: 3px solid #2C3E50; border-radius: 50%; aspect-ratio: 1 / 1; display: flex; align-items: center; justify-content: center; box-shadow: inset 0px 0px 15px rgba(0,0,0,0.05), 0px 5px 15px rgba(0,0,0,0.1); } .compass-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr 1fr; width: 100%; height: 100%; gap: 4px; } .c-cell { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; border-radius: 50%; border: 1px solid #E5E7E9; font-size: 0.95rem; font-weight: bold; color: #2C3E50; background-color: #ffffff; } .c-center { border: 2px solid #D4AF37; background-color: #FEF9E7; } .c-shaded { background-color: #34495E !important; color: #ffffff !important; border: none; } .c-label { font-size: 0.65rem; font-weight: normal; margin-top: 2px; } .c-shaded .c-label { color: #BDC3C7; }</style>"
+                    
+                    # ฟังก์ชันตรวจสอบทิศห้ามกระทบ
+                    def check_shade(code):
+                        return "c-shaded" if any(f"({code})" in s for s in res['shaded_palaces']) else ""
+                    
+                    # วาดตาราง 9 ช่องบีบอัดบรรทัดเดียว
+                    html_compass = f"{compass_css}<div class='compass-container'><div class='compass-grid'><div class='c-cell {check_shade('SE')}'>SE<br><span class='c-label'>เฉียงใต้</span></div><div class='c-cell {check_shade('S')}'>S<br><span class='c-label'>ใต้</span></div><div class='c-cell {check_shade('SW')}'>SW<br><span class='c-label'>เฉียงใต้</span></div><div class='c-cell {check_shade('E')}'>E<br><span class='c-label'>ตะวันออก</span></div><div class='c-cell c-center {check_shade('Center')}'>C<br><span class='c-label'>กลาง</span></div><div class='c-cell {check_shade('W')}'>W<br><span class='c-label'>ตะวันตก</span></div><div class='c-cell {check_shade('NE')}'>NE<br><span class='c-label'>เฉียงเหนือ</span></div><div class='c-cell {check_shade('N')}'>N<br><span class='c-label'>เหนือ</span></div><div class='c-cell {check_shade('NW')}'>NW<br><span class='c-label'>เฉียงเหนือ</span></div></div></div><div style='text-align:center; margin-top:15px; font-size:0.85rem; color:#E74C3C;'><b>⚠️ พื้นที่วงกลมสีเข้ม คือ ห้าม รบกวน เคาะ ตอก เจาะ ขุด</b></div>"
+                    
+                    st.markdown(html_compass, unsafe_allow_html=True)
                     st.markdown(bazi_html, unsafe_allow_html=True)
                     
                     if res['clash_zodiac']:
