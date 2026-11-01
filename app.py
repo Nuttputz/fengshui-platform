@@ -87,7 +87,7 @@ with tab_home:
     if st.button("🔮 เปิดแผ่นปฏิทินฮวงจุ้ย", use_container_width=True, key="btn_dash"):
         with st.spinner("กำลังคำนวณผังปฏิทินฮวงจุ้ยและกาลเวลา..."):
             try:
-                res = requests.post("http://127.0.0.1:8000/daily-dashboard", json={"target_date": str(selected_date)}).json()
+                res = requests.post("[https://fengshui-platform.onrender.com/daily-dashboard](https://fengshui-platform.onrender.com/daily-dashboard)", ...)
                 
                 # --- แผ่นปฏิทินรายวัน (Paper Layout) ---
                 st.markdown("<div class='calendar-paper'>", unsafe_allow_html=True)
@@ -198,7 +198,7 @@ with tab_chinese:
     if submit_chinese:
         payload = {"birth_year_zodiac": zodiac_c, "favorable_elements": fav_elements, "house_degree": int(house_degree), "start_date": str(start_date_c), "days_to_scan": int(days_c)}
         try:
-            res_c = requests.post("http://127.0.0.1:8000/analyze-dates", json=payload).json()
+            res_c = requests.post("[https://fengshui-platform.onrender.com/analyze-dates](https://fengshui-platform.onrender.com/analyze-dates)", ...)
             st.subheader("📊 ปฏิทินฤกษ์มงคลจีน")
             
             weekdays = ["จันทร์", "อังคาร", "พุธ", "พฤหัส", "ศุกร์", "เสาร์", "อาทิตย์"]
@@ -256,7 +256,7 @@ with tab_thai:
     if submit_thai:
         payload_thai = {"activity_type": activity, "start_date": str(start_date_t), "days_to_scan": int(days_t)}
         try:
-            res_t = requests.post("http://127.0.0.1:8000/analyze-thai-dates", json=payload_thai).json()
+            res_t = requests.post("[https://fengshui-platform.onrender.com/analyze-thai-dates](https://fengshui-platform.onrender.com/analyze-thai-dates)", ...)
             st.subheader("📊 รายงานผลฤกษ์ไทย")
             for day in res_t["data"]:
                 icon = "✅" if day["status"] == "Green Zone" else "❌" if day["status"] == "Red Zone" else "⚠️"
