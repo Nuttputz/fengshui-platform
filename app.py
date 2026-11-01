@@ -198,7 +198,7 @@ with tab_chinese:
     if submit_chinese:
         payload = {"birth_year_zodiac": zodiac_c, "favorable_elements": fav_elements, "house_degree": int(house_degree), "start_date": str(start_date_c), "days_to_scan": int(days_c)}
         try:
-            res_c = requests.post("https://fengshui-platform.onrender.com/analyze-dates", json=payload).json())
+            res_c = requests.post("https://fengshui-platform.onrender.com/analyze-dates", json=payload).json()
             st.subheader("📊 ปฏิทินฤกษ์มงคลจีน")
             
             weekdays = ["จันทร์", "อังคาร", "พุธ", "พฤหัส", "ศุกร์", "เสาร์", "อาทิตย์"]
